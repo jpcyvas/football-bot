@@ -170,6 +170,8 @@ async function getStandingsData(){
                     }  
                     if(teamsData[y].stats[z].name === "ties"){
                         fantasyTeams[x].ties += teamsData[y].stats[z].value;
+                        fantasyTeams[x].wins += (teamsData[y].stats[z].value)/2;
+                        fantasyTeams[x].losses += (teamsData[y].stats[z].value)/2;
                     }    
 
                 }
