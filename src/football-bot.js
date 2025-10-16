@@ -214,7 +214,7 @@ async function getStandings(){
 }
 
 async function getGoogleSheetStandings(){
-    var fantasyTeams = await getFantasyTeams();
+    var fantasyTeams = await getStandingsData();
     var fantasyTeamsWinners = JSON.parse(JSON.stringify(fantasyTeams));;
     var fantasyTeamsLosers = JSON.parse(JSON.stringify(fantasyTeamsWinners));
     
@@ -243,10 +243,10 @@ async function getGoogleSheetStandings(){
 
     //add spacer + team rosters
     outputJson.push(["","","","",""]);
-    outputJson.push(["Player","Team 1"," Team 2","Team 3",""]);
+    outputJson.push(["Player","Team 1",""," Team 2","","Team 3",""]);
     for(var x=0; x<fantasyTeams.length; x++){
         outputJson.push(
-            [fantasyTeams[x].name, fantasyTeams[x].teams[0], fantasyTeams[x].teams[1], fantasyTeams[x].teams[2],""]);
+            [fantasyTeams[x].name, fantasyTeams[x].teams[0],"", fantasyTeams[x].teams[1],"", fantasyTeams[x].teams[2],""]);
     }
 
     //stringify output and return
