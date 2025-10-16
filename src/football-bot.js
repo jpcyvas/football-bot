@@ -140,7 +140,7 @@ function getFantasyTeams(){
     return fantasyTeams;
 }
 
-async function getStandings(){
+async function getStandingsData(){
     const data = await makeAPICall(footballApiUrlStandings);
     var fantasyTeams = getFantasyTeams();
 
@@ -170,9 +170,16 @@ async function getStandings(){
                 }
             }
         }
-    }  
+    } 
     
-    //create winners scorboard
+    return fantasyTeams;
+    
+}
+
+async function getStandings(){
+    var fantasyTeams = await getStandingsData();
+
+     //create winners scorboard
     var outputWinners = "=== Winners Leaderboard ===\n";
 
     //sort fantasy teams by wins
@@ -199,9 +206,36 @@ async function getStandings(){
 
 }
 
+async function getGoogleSheetStandings(){
+    var fantasyTeamsWinners = await getStandingsData();
+    var fantasyTeamsLosers = JSON.parse(JSON.stringify(fantasyTeamsWinners));
+    
+    //sort the winners
+    fantasyTeamsWinners.sort((a, b) => b.wins - a.wins);
+
+    //sort the losers
+    fantasyTeamsLosers.sort((a, b) => b.losses - a.losses);
+
+    //construct the json object to return
+    var outputJson = [
+        ["Winners Leaderboard","","","Losers Leaderboard",""]
+    ]
+
+    for(var x=0; x<fantasyTeamsWinners.length; x++){
+        outputJson.push(
+            [fantasyTeamsWinners[x].name, fantasyTeamsWinners[x].wins, "", fantasyTeamsLosers[x].name, fantasyTeamsLosers[x].losses]
+        );
+    }
+
+    return outputJson;
+
+}
+
+
 
 
 
 module.exports = {
-    getStandings
+    getStandings,
+    getGoogleSheetStandings
 }
