@@ -36,6 +36,7 @@ function getFantasyTeams(){
             "Atlanta Falcons",
             "Jacksonville Jaguars"
             ],
+            "displayTeams":[],
             "wins": 0,
             "losses": 0,
             "ties": 0
@@ -47,6 +48,7 @@ function getFantasyTeams(){
             "Pittsburgh Steelers",
             "Houston Texans"
             ],
+            "displayTeams":[],
             "wins": 0,
             "losses": 0,
             "ties": 0
@@ -58,6 +60,7 @@ function getFantasyTeams(){
             "Tampa Bay Buccaneers",
             "New England Patriots"
             ],
+            "displayTeams":[],
             "wins": 0,
             "losses": 0,
             "ties": 0
@@ -69,6 +72,7 @@ function getFantasyTeams(){
             "New Orleans Saints",
             "Indianapolis Colts"
             ],
+            "displayTeams":[],
             "wins": 0,
             "losses": 0,
             "ties": 0
@@ -80,6 +84,7 @@ function getFantasyTeams(){
             "New York Giants",
             "Dallas Cowboys"
             ],
+            "displayTeams":[],
             "wins": 0,
             "losses": 0,
             "ties": 0
@@ -91,6 +96,7 @@ function getFantasyTeams(){
             "San Francisco 49ers",
             "Cincinnati Bengals"
             ],
+            "displayTeams":[],
             "wins": 0,
             "losses": 0,
             "ties": 0
@@ -102,6 +108,7 @@ function getFantasyTeams(){
             "Green Bay Packers",
             "Washington Commanders"
             ],
+            "displayTeams":[],
             "wins": 0,
             "losses": 0,
             "ties": 0
@@ -113,6 +120,7 @@ function getFantasyTeams(){
             "Carolina Panthers",
             "Tennessee Titans"
             ],
+            "displayTeams":[],
             "wins": 0,
             "losses": 0,
             "ties": 0
@@ -124,6 +132,7 @@ function getFantasyTeams(){
             "Miami Dolphins",
             "Los Angeles Chargers"
             ],
+            "displayTeams":[],
             "wins": 0,
             "losses": 0,
             "ties": 0
@@ -135,6 +144,7 @@ function getFantasyTeams(){
             "Chicago Bears",
             "Kansas City Chiefs"
             ],
+            "displayTeams":[],
             "wins": 0,
             "losses": 0,
             "ties": 0
@@ -154,27 +164,39 @@ async function getStandingsData(){
     var teamsData = data.children[0].standings.entries;
     teamsData = teamsData.concat(data.children[1].standings.entries);
 
+    //make variable for tracking currentWins, currentLosses, currentTies
+    var currentWins = 0;
+    var currentLosses = 0;
+    var currentTies = 0;
+
 
     //loop through each fantasy team and get the wins and loses for each of their teams
     for(var x=0; x<fantasyTeams.length; x++){
         for(var y=0; y<teamsData.length; y++){
             if(fantasyTeams[x].teams.includes(teamsData[y].team.displayName)){
                 
+                currentWins = 0;
+                currentLosses = 0;
+                currentTies = 0;    
                 //loop through the "stats" and find the wins, losses, and ties and add them to the fantasy team
                 for(var z=0; z<teamsData[y].stats.length; z++){
                     if(teamsData[y].stats[z].name === "wins"){
                         fantasyTeams[x].wins += teamsData[y].stats[z].value;
+                        currentWins = teamsData[y].stats[z].value
                     }
                     if(teamsData[y].stats[z].name === "losses"){
                         fantasyTeams[x].losses += teamsData[y].stats[z].value;
+                        currentLosses = teamsData[y].stats[z].value
                     }  
                     if(teamsData[y].stats[z].name === "ties"){
                         fantasyTeams[x].ties += teamsData[y].stats[z].value;
                         fantasyTeams[x].wins += (teamsData[y].stats[z].value)/2;
                         fantasyTeams[x].losses += (teamsData[y].stats[z].value)/2;
+                        currentTies = teamsData[y].stats[z].value;
                     }    
 
                 }
+                fantasyTeams[x].displayName.push(`${teamsData[y].team.displayName} (${currentWins}-${currentLosses}-${currentTies})`);
             }
         }
     } 
@@ -246,7 +268,7 @@ async function getGoogleSheetStandings(){
     outputJson.push(["Player","Team 1",""," Team 2","","Team 3",""]);
     for(var x=0; x<fantasyTeams.length; x++){
         outputJson.push(
-            [fantasyTeams[x].name, fantasyTeams[x].teams[0],"", fantasyTeams[x].teams[1],"", fantasyTeams[x].teams[2],""]);
+            [fantasyTeams[x].name, fantasyTeams[x].displayName[0] ,"", fantasyTeams[x].displayName[1],"", fantasyTeams[x].displayName[2],""]);
     }
 
     //stringify output and return
