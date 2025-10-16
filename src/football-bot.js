@@ -227,7 +227,7 @@ async function getGoogleSheetStandings(){
         );
     }
 
-    return outputJson;
+    return JSON.stringify(outputJson);
 
 }
 
