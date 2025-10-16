@@ -27,13 +27,6 @@ export default function App() {
 
       {stats.map((player, index) => (
         <div key={index}>
-            {/* <Card
-                title={player.name}
-                className="md:w-25rem">
-                <p className="m-0">
-                Hello world
-                </p>
-            </Card> */}
             <Fieldset legend={player.name}>
                 {stats[index].displayTeams.map((team, displayTeamIndex) => (
                     <div key={displayTeamIndex}>
