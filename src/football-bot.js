@@ -9,6 +9,11 @@ function getTodaysDate() {
     return now.toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
 }
 
+function getTodaysDateAndTime() {
+    // produce YYYY-MM-DD HH:MM in US Central time
+    const now = new Date();
+    return now.toLocaleDateString('en-CA', { timeZone: 'America/Chicago' }) + ' ' + now.toLocaleTimeString('en-CA', { timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', hour12: false });
+}
 
 //Fetch data from the API
 async function makeAPICall(apiURL) {
@@ -221,12 +226,18 @@ async function getGoogleSheetStandings(){
         ["Winners Leaderboard","","","Losers Leaderboard",""]
     ]
 
+    //add winners an losers
     for(var x=0; x<fantasyTeamsWinners.length; x++){
         outputJson.push(
             [fantasyTeamsWinners[x].name, fantasyTeamsWinners[x].wins, "", fantasyTeamsLosers[x].name, fantasyTeamsLosers[x].losses]
         );
     }
 
+    //add spacer + footer
+    outputJson.push(["","","","",""]);
+    outputJson.push([`Last updated: ${getTodaysDateAndTime()} CST`]);
+
+    //stringify output and return
     return JSON.stringify(outputJson);
 
 }
