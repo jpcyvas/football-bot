@@ -42,7 +42,7 @@ jobs:
             spreadsheetId: ${{ secrets.GSHEET_SPREADSHEET_ID}}
             commands: |
                 [
-                    { "command": "updateData", "args": { "data": [["1", "2", "3"]] }}
+                    { "command": "updateData", "args": { "data": [["1", "2", "3"]], "worksheetTitle": "Sheet1" }}
                 ]
         env:
           GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
