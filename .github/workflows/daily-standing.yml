@@ -2,7 +2,11 @@ name: Daily Standing Message
 
 on:
   schedule:
-    - cron: "0 17 * * *"
+    - cron: "0 4 * * Tue"   # Mondays 23:00 CT (CDT -> UTC 04:00 Tue)
+    - cron: "0 4 * * Fri"   # Thursdays 23:00 CT (CDT -> UTC 04:00 Fri)
+    - cron: "30 19 * * Sun" # Sundays 14:30 CT (CDT -> UTC 19:30 Sun)
+    - cron: "0 23 * * Sun"  # Sundays 18:00 CT (CDT -> UTC 23:00 Sun)
+    - cron: "0 3 * * Mon"   # Sundays 22:00 CT (CDT -> UTC 03:00 Mon)
   workflow_dispatch:
     inputs:
         webhook:
