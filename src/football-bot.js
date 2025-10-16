@@ -196,7 +196,7 @@ async function getStandingsData(){
                     }    
 
                 }
-                fantasyTeams[x].displayName.push(`${teamsData[y].team.displayName} (${currentWins}-${currentLosses}-${currentTies})`);
+                fantasyTeams[x].displayTeams.push(`${teamsData[y].team.displayName} (${currentWins}-${currentLosses}-${currentTies})`);
             }
         }
     } 
