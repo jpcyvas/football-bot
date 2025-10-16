@@ -207,7 +207,7 @@ async function getStandingsData(){
                 });
                 
                 //sort the displayTeams by wins to show teams in order of wins
-                fantasyTeams[x].displayTeams.sort((a, b) => b.wins - a.wins)
+                fantasyTeams[x].displayTeams.sort((a, b) => (b.wins + b.ties) - (a.wins + a.ties));
                     
             }
         }
