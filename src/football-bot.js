@@ -268,7 +268,7 @@ async function getGoogleSheetStandings(){
     outputJson.push(["Player","Team 1",""," Team 2","","Team 3",""]);
     for(var x=0; x<fantasyTeams.length; x++){
         outputJson.push(
-            [fantasyTeams[x].name, fantasyTeams[x].displayName[0] ,"", fantasyTeams[x].displayName[1],"", fantasyTeams[x].displayName[2],""]);
+            [fantasyTeams[x].name, fantasyTeams[x].displayTeams[0] ,"", fantasyTeams[x].displayTeams[1],"", fantasyTeams[x].displayTeams[2],""]);
     }
 
     //stringify output and return
