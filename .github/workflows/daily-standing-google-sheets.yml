@@ -1,4 +1,4 @@
-name: Daily Standing Message
+name: Daily Spreadsheet Update
 
 on:
   schedule:
