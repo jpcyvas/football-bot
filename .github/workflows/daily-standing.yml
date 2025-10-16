@@ -46,12 +46,12 @@ jobs:
 
           # fallback to WonderPals when no input was provided (cron run)
           if [ -z "$selection" ]; then
-            selection="WonderPals"
+            selection="Jonas Lolo"
           fi
 
           if [ "$selection" = "Test" ]; then
             echo "DISCORD_WEBHOOK=${{ secrets.DISCORD_WEBHOOK_TEST }}" >> $GITHUB_ENV
-          elif [ "$selection" = "WonderPals" ]; then
+          elif [ "$selection" = "Jonas Lolo" ]; then
             echo "DISCORD_WEBHOOK=${{ secrets.WEBHOOK_DISCORD_JONAS_LOLO }}" >> $GITHUB_ENV
           else
             echo "Invalid webhook option"
