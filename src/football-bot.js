@@ -71,7 +71,7 @@ function getFantasyTeams(){
         {
             "name": "Lauren",
             "teams": [
-            "Cleaveland Browns",
+            "Cleveland Browns",
             "New York Giants",
             "Dallas Cowboys"
             ],
