@@ -196,7 +196,19 @@ async function getStandingsData(){
                     }    
 
                 }
-                fantasyTeams[x].displayTeams.push(`${teamsData[y].team.displayName} (${currentWins}-${currentLosses}-${currentTies})`);
+
+                //add to displayTeams array
+                fantasyTeams[x].displayTeams.push({
+                    displayName: teamsData[y].team.displayName,
+                    wins: currentWins,
+                    losses: currentLosses,
+                    ties: currentTies,
+                    displayNameAndRecord:`${teamsData[y].team.displayName} (${currentWins}-${currentLosses}-${currentTies})`
+                });
+                
+                //sort the displayTeams by wins to show teams in order of wins
+                fantasyTeams[x].displayTeams.sort((a, b) => b.wins - a.wins)
+                    
             }
         }
     } 
@@ -268,7 +280,7 @@ async function getGoogleSheetStandings(){
     outputJson.push(["Player","Team 1",""," Team 2","","Team 3",""]);
     for(var x=0; x<fantasyTeams.length; x++){
         outputJson.push(
-            [fantasyTeams[x].name, fantasyTeams[x].displayTeams[0] ,"", fantasyTeams[x].displayTeams[1],"", fantasyTeams[x].displayTeams[2],""]);
+            [fantasyTeams[x].name, fantasyTeams[x].displayTeams[0].displayNameAndRecord ,"", fantasyTeams[x].displayTeams[1].displayNameAndRecord,"", fantasyTeams[x].displayTeams[2].displayNameAndRecord,""]);
     }
 
     //stringify output and return
