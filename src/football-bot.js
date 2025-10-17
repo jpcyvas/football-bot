@@ -203,7 +203,8 @@ async function getStandingsData(){
                     wins: currentWins,
                     losses: currentLosses,
                     ties: currentTies,
-                    displayNameAndRecord:`${teamsData[y].team.displayName} (${currentWins}-${currentLosses}-${currentTies})`
+                    displayNameAndRecord:`${teamsData[y].team.displayName} (${currentWins}-${currentLosses}-${currentTies})`,
+                    logoUrl: teamsData[y].team.logos[0].href
                 });
                 
                 //sort the displayTeams by wins to show teams in order of wins
@@ -219,6 +220,8 @@ async function getStandingsData(){
 
 async function getStandings(){
     var fantasyTeams = await getStandingsData();
+
+    return fantasyTeams;
 
      //create winners scorboard
     var outputWinners = "=== Winners Leaderboard ===\n";
