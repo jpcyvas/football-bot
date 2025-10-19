@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+
+.fff-body-tag{
+   background-image: url('./img/background-subtle.png');
+   background-attachment: fixed; 
+}
+
+.fff-body-tag .fff-winners-table .p-datatable-header{
+        background-color: #054778;
+        color:white;
+        text-align: center;
+        font-weight:bold;
+}
+
+.fff-body-tag .fff-losers-table .p-datatable-header{
+        background-color: #c81e28;
+        color:white;
+        text-align: center;
+        font-weight:bold;
+}
+
+.fff-body-tag .fff-winner-stat, .fff-dialog .fff-winner-stat{
+        background-color: #054778;
+        color:white;   
+}
+
+.fff-body-tag .fff-losers-stat, .fff-dialog .fff-losers-stat{
+        background-color: #c81e28;
+        color:white;   
+}
+
+.fff-body-tag .p-fieldset .p-fieldset-legend{
+    /* background-color:#BA8C00; */
+}
