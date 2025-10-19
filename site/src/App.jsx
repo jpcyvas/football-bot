@@ -24,7 +24,7 @@ export default function App() {
 
   //get data
   useEffect(() => {
-  fetch('/data.json')
+  fetch('./data.json')
     .then(res => res.json())
     .then(data => {
       setStats(data);
