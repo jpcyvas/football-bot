@@ -16,7 +16,6 @@ export default function App() {
   const [stats, setStats] = useState([]);
 
   
-
   const onRowSelect = (event) => {
     setCurrentPlayer(event.data);
     setDialogVisible(true);    
