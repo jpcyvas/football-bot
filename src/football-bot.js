@@ -289,6 +289,11 @@ async function getGoogleSheetStandings(){
 
 }
 
+async function GetStandingsStringifyed(){
+    return JSON.stringify( await getStandings());
+
+};
+
 
 
 
@@ -296,5 +301,6 @@ async function getGoogleSheetStandings(){
 module.exports = {
     getStandings,
     getGoogleSheetStandings,
-    getStandingsData
+    getStandingsData,
+    GetStandingsStringifyed
 }

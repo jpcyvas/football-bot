@@ -24,7 +24,7 @@ jobs:
 
         -   name: Run football bot to create data.json
             run: |
-                node -e "require('./src/football-bot').getStandingsData().then(d=>console.log(d)).catch(err=>{ console.error(err); process.exit(1); })" > site/public/data.json
+                node -e "require('./src/football-bot').GetStandingsStringifyed().then(d=>console.log(d)).catch(err=>{ console.error(err); process.exit(1); })" > site/public/data.json
         
         -   name: Install Site Dependencies
             working-directory: site
