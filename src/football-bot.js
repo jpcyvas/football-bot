@@ -290,7 +290,7 @@ async function getGoogleSheetStandings(){
 }
 
 async function GetStandingsStringifyed(){
-    return JSON.stringify( await getStandings());
+    return JSON.stringify( await getStandingsData());
 
 };
 
