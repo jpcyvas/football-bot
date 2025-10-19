@@ -221,8 +221,6 @@ async function getStandingsData(){
 async function getStandings(){
     var fantasyTeams = await getStandingsData();
 
-    return fantasyTeams;
-
      //create winners scorboard
     var outputWinners = "=== Winners Leaderboard ===\n";
 
@@ -297,5 +295,6 @@ async function getGoogleSheetStandings(){
 
 module.exports = {
     getStandings,
-    getGoogleSheetStandings
+    getGoogleSheetStandings,
+    getStandingsData
 }
