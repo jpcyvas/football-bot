@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const footballApiUrlStandings = 'https://site.api.espn.com/apis/v2/sports/football/nfl/standings';
+const footballApiUrlSchedule = 'https://cdn.espn.com/core/nfl/schedule?xhr=1&year={YEAR}&week={WEEK}';
 
 //Get today's date in YYYY-MM-DD format
 function getTodaysDate() {
@@ -39,7 +40,8 @@ function getFantasyTeams(){
             "displayTeams":[],
             "wins": 0,
             "losses": 0,
-            "ties": 0
+            "ties": 0,
+            "teamMappings": {}
         },
         {
             "name": "Beth",
@@ -51,7 +53,8 @@ function getFantasyTeams(){
             "displayTeams":[],
             "wins": 0,
             "losses": 0,
-            "ties": 0
+            "ties": 0,
+            "teamMappings": {}
         },
         {
             "name": "Brandon",
@@ -63,7 +66,8 @@ function getFantasyTeams(){
             "displayTeams":[],
             "wins": 0,
             "losses": 0,
-            "ties": 0
+            "ties": 0,
+            "teamMappings": {}
         },
         {
             "name": "Jonas",
@@ -75,7 +79,8 @@ function getFantasyTeams(){
             "displayTeams":[],
             "wins": 0,
             "losses": 0,
-            "ties": 0
+            "ties": 0,
+            "teamMappings": {}
         },
         {
             "name": "Lauren",
@@ -87,7 +92,8 @@ function getFantasyTeams(){
             "displayTeams":[],
             "wins": 0,
             "losses": 0,
-            "ties": 0
+            "ties": 0,
+            "teamMappings": {}
         },
         {
             "name": "Maria",
@@ -99,7 +105,8 @@ function getFantasyTeams(){
             "displayTeams":[],
             "wins": 0,
             "losses": 0,
-            "ties": 0
+            "ties": 0,
+            "teamMappings": {}
         },
         {
             "name": "Mitch",
@@ -111,7 +118,8 @@ function getFantasyTeams(){
             "displayTeams":[],
             "wins": 0,
             "losses": 0,
-            "ties": 0
+            "ties": 0,
+            "teamMappings": {}
         },
         {
             "name": "Stephen",
@@ -123,7 +131,8 @@ function getFantasyTeams(){
             "displayTeams":[],
             "wins": 0,
             "losses": 0,
-            "ties": 0
+            "ties": 0,
+            "teamMappings": {}
         },
         {
             "name": "Taylor",
@@ -135,7 +144,8 @@ function getFantasyTeams(){
             "displayTeams":[],
             "wins": 0,
             "losses": 0,
-            "ties": 0
+            "ties": 0,
+            "teamMappings": {}
         },
         {
             "name": "Theresa",
@@ -147,7 +157,8 @@ function getFantasyTeams(){
             "displayTeams":[],
             "wins": 0,
             "losses": 0,
-            "ties": 0
+            "ties": 0,
+            "teamMappings": {}
         }
     ];
 
@@ -157,6 +168,9 @@ function getFantasyTeams(){
 
 async function getStandingsData(){
     const data = await makeAPICall(footballApiUrlStandings);
+    const scheduleData = await getScheduleData();
+
+    var scheduleDataOutput = [];
     var fantasyTeams = getFantasyTeams();
 
 
@@ -169,11 +183,28 @@ async function getStandingsData(){
     var currentLosses = 0;
     var currentTies = 0;
 
+    //make a hash map to store team mapping to owner
+    var teamToOwnerMapping = {};
 
     //loop through each fantasy team and get the wins and loses for each of their teams
     for(var x=0; x<fantasyTeams.length; x++){
         for(var y=0; y<teamsData.length; y++){
+
+            if(!teamToOwnerMapping.hasOwnProperty(teamsData[y].team.abbreviation)){
+                teamToOwnerMapping[teamsData[y].team.abbreviation] = {
+                    owner:"",
+                    wins:0,
+                    losses:0,
+                    ties:0,
+                    fullName:"",
+                    logo:"",
+                    games:[]
+                }
+            }
+
             if(fantasyTeams[x].teams.includes(teamsData[y].team.displayName)){
+
+                teamToOwnerMapping[teamsData[y].team.abbreviation].owner = fantasyTeams[x].name;
                 
                 currentWins = 0;
                 currentLosses = 0;
@@ -183,16 +214,19 @@ async function getStandingsData(){
                     if(teamsData[y].stats[z].name === "wins"){
                         fantasyTeams[x].wins += teamsData[y].stats[z].value;
                         currentWins = teamsData[y].stats[z].value
+                        teamToOwnerMapping[teamsData[y].team.abbreviation].wins = teamsData[y].stats[z].value;
                     }
                     if(teamsData[y].stats[z].name === "losses"){
                         fantasyTeams[x].losses += teamsData[y].stats[z].value;
-                        currentLosses = teamsData[y].stats[z].value
+                        currentLosses = teamsData[y].stats[z].value;
+                        teamToOwnerMapping[teamsData[y].team.abbreviation].losses = teamsData[y].stats[z].value;
                     }  
                     if(teamsData[y].stats[z].name === "ties"){
                         fantasyTeams[x].ties += teamsData[y].stats[z].value;
                         fantasyTeams[x].wins += (teamsData[y].stats[z].value)/2;
                         fantasyTeams[x].losses += (teamsData[y].stats[z].value)/2;
                         currentTies = teamsData[y].stats[z].value;
+                        teamToOwnerMapping[teamsData[y].team.abbreviation].ties = teamsData[y].stats[z].value
                     }    
 
                 }
@@ -206,6 +240,10 @@ async function getStandingsData(){
                     displayNameAndRecord:`${teamsData[y].team.displayName} (${currentWins}-${currentLosses}-${currentTies})`,
                     logoUrl: teamsData[y].team.logos[0].href
                 });
+
+                //add values to team mapping
+                teamToOwnerMapping[teamsData[y].team.abbreviation].fullName = teamsData[y].team.displayName;
+                teamToOwnerMapping[teamsData[y].team.abbreviation].logo = teamsData[y].team.logos[0].href;
                 
                 //sort the displayTeams by wins to show teams in order of wins
                 fantasyTeams[x].displayTeams.sort((a, b) => (b.wins + b.ties) - (a.wins + a.ties));
@@ -213,13 +251,70 @@ async function getStandingsData(){
             }
         }
     } 
-    
-    return fantasyTeams;
+
+    for(var v=0;v<fantasyTeams.length;v++){
+        fantasyTeams[v].teamMappings = teamToOwnerMapping;
+    }   
+
+    //make a schedule object, games per day (scheduleDataOutput)
+    for(var key in scheduleData.content.schedule){
+        //grab the first game time and get the data for it
+       
+        for(var x=0;x<scheduleData.content.schedule[key].games.length;x++){
+            var currentGame = {
+                gameTime:scheduleData.content.schedule[key].games[x].date,
+                awayTeamAbbrv:"",
+                awayTeamLogo:"",
+                awayTeamFullName:"",
+                awayTeamOwner:"",
+                awayTeamScore: 0,
+                homeTeamAbbrv:"",
+                homeTeamLogo:"",
+                homeTeamFullName:"",
+                homeTeamOwner:"",
+                homeTeamScore: 0
+            }  
+            
+            for(var y=0;y<scheduleData.content.schedule[key].games[x].competitions[0].competitors.length;y++){
+                if(scheduleData.content.schedule[key].games[x].competitions[0].competitors[y].homeAway == 'home'){
+                    currentGame.homeTeamAbbrv =  scheduleData.content.schedule[key].games[x].competitions[0].competitors[y].team.abbreviation;
+                    currentGame.homeTeamLogo =  scheduleData.content.schedule[key].games[x].competitions[0].competitors[y].team.logo;
+                    currentGame.homeTeamFullName = scheduleData.content.schedule[key].games[x].competitions[0].competitors[y].team.displayName;
+                    currentGame.homeTeamScore = scheduleData.content.schedule[key].games[x].competitions[0].competitors[y].score;
+                    currentGame.homeTeamOwner = teamToOwnerMapping[currentGame.homeTeamAbbrv].owner;
+                }else{
+                    currentGame.awayTeamAbbrv =  scheduleData.content.schedule[key].games[x].competitions[0].competitors[y].team.abbreviation;
+                    currentGame.awayTeamLogo =  scheduleData.content.schedule[key].games[x].competitions[0].competitors[y].team.logo;
+                    currentGame.awayTeamFullName = scheduleData.content.schedule[key].games[x].competitions[0].competitors[y].team.displayName;
+                    currentGame.awayTeamScore = scheduleData.content.schedule[key].games[x].competitions[0].competitors[y].score;
+                    currentGame.awayTeamOwner = teamToOwnerMapping[currentGame.awayTeamAbbrv].owner;
+                }
+            }
+
+            scheduleDataOutput.push(currentGame);
+
+            //add game to team mapping
+            teamToOwnerMapping[currentGame.awayTeamAbbrv].games.push(currentGame);
+            teamToOwnerMapping[currentGame.homeTeamAbbrv].games.push(currentGame);
+
+        }
+
+    }
+
+    var outputData = {
+        standings:fantasyTeams,
+        schedule:scheduleDataOutput,
+        teamMapping:teamToOwnerMapping
+    }
+
+
+    return outputData;
     
 }
 
 async function getStandings(){
-    var fantasyTeams = await getStandingsData();
+    var allData = await getStandingsData();
+    var fantasyTeams = allData.standings;
 
      //create winners scorboard
     var outputWinners = "=== Winners Leaderboard ===\n";
@@ -294,6 +389,51 @@ async function GetStandingsStringifyed(){
 
 };
 
+//get the current NFL week based on today's date
+function getCurrentNFLWeek(today = new Date()) {
+  const seasonStart = new Date('2025-09-04'); // NFL 2025 season start date
+  const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+
+  const diff = today - seasonStart;
+  if (diff < 0) return 0; // Season hasn't started yet
+
+  const week = Math.floor(diff / msPerWeek) + 1;
+  return week;
+} 
+
+
+async function getScheduleData(){
+
+    //construt URL
+    var scheduleUrl = footballApiUrlSchedule.replace("{YEAR}", new Date().getFullYear());
+    scheduleUrl = scheduleUrl.replace("{WEEK}", getCurrentNFLWeek()); //hardcoded for week 1 for now    
+
+    const data = await makeAPICall(scheduleUrl);
+
+    return data
+
+}
+
+async function getScheduleStringifyed(){
+    return JSON.stringify( await getScheduleData());    
+}
+
+async function getAllData(){
+    const standings = await getStandingsData();
+    const schedule = await getScheduleData();
+    var allData = {
+        standings: standings,
+        schedule: schedule
+    };
+    return allData;
+}
+
+async function getAllDataStringifyed(){
+    return JSON.stringify(getAllData());
+}
+
+
+
 
 
 
@@ -302,5 +442,7 @@ module.exports = {
     getStandings,
     getGoogleSheetStandings,
     getStandingsData,
-    GetStandingsStringifyed
+    GetStandingsStringifyed,
+    getAllData,
+    getAllDataStringifyed
 }
