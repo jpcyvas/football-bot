@@ -189,7 +189,7 @@ export default function App() {
               <div className="flex items-center gap-2">
                   <Avatar  image={game.awayTeamLogo} size="large"/>
                   <span>{game.awayTeamFullName}</span>
-                  <Tag value={game.awayTeamOwner} rounded/>
+                  {game.awayTeamOwner &&  <Tag value={game.awayTeamOwner} rounded/> }
                   <span className="ml-auto p-3">{game.awayTeamScore}</span>
               </div>  
             </div>  
@@ -197,7 +197,7 @@ export default function App() {
               <div className="flex items-center gap-2">
                 <Avatar  image={game.homeTeamLogo} size="large"/>
                 <span>{game.homeTeamFullName}</span>
-                <Tag value={game.homeTeamOwner} rounded/>
+                {game.homeTeamOwner && <Tag value={game.homeTeamOwner} rounded/> }
                 <span className="ml-auto p-3">{game.homeTeamScore}</span>
               </div>   
             </div>   
