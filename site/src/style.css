@@ -85,3 +85,15 @@
         box-shadow: var(--shadow-2xl);  
         background-color:oklch(96.2% 0.059 95.617);      
 }
+
+.fff-body-tag .p-speeddial .p-button.p-button-icon-only.p-button-rounded{
+        border-radius: 3px;
+}
+
+.fff-body-tag .p-dock .p-dock-container {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.5rem;
+    overflow: visible !important;
+}

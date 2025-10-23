@@ -11,7 +11,9 @@ import { Card } from 'primereact/card';
 import { SpeedDial } from 'primereact/speeddial';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
+import { Dock } from 'primereact/dock';
 import logo from './img/logo-family-fantasy-football.png';
+import iconTeam from './img/icon-team.png';
 
 export default function App() {
   const [dialogVisible, setDialogVisible] = useState(false);
@@ -34,6 +36,36 @@ export default function App() {
           localStorage.setItem('currentGlobalPlayer', event); 
     }
   }
+
+   const items = [
+        {
+            label: 'LeaderBoard',
+            icon: () => <Avatar icon="pi pi-list" size="xlarge" onClick={() => scrollToSection('leaderBoardSection')}/>
+        },
+        {
+            label: 'Teams Teams',
+            icon: () => <Avatar icon="pi pi-id-card" size="xlarge" onClick={() => scrollToSection('teamsSection')}/>,
+        },
+        {
+            label: 'Schedule',
+            icon: () => <Avatar icon="pi pi-calendar" size="xlarge" onClick={() => scrollToSection('scheduleSection')}/>,
+        },
+        {
+            labe: 'Player Select',
+            icon: () => <SpeedDial model={stats} direction="up" showIcon="pi pi-user" style={{ left: -15, bottom: 10, position: 'fixed' }} />
+
+        }
+    ];
+
+    const scrollToSection = (id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+
+
 
   //get data
   useEffect(() => {
@@ -68,12 +100,11 @@ export default function App() {
 
   return (
     <div className="p-4 bg-gray-100 fff-body-tag">
-      <ScrollTop />
-      <SpeedDial model={stats} direction="up" style={{ left: 10, bottom: 10, position: 'fixed' }} />
+      {/* <SpeedDial model={stats} direction="up" showIcon="pi pi-user" style={{ left: 10, bottom: 10, position: 'fixed' }} /> */}
 
 
         {/* Start Leader Boards */}
-        <div className='flex justify-center '>
+        <div className='flex justify-center ' id="leaderBoardSection">
           <div className="flex items-center gap-2 p-3 shadow-md bg-white">
             <Image src={logo} alt="Image" width="125" />
             <h1 className='text-2xl p-4 text-shadow-md'>Family Fantasy Football 2025-2026</h1>
@@ -81,7 +112,7 @@ export default function App() {
         </div>
 
         <br></br>
-        <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-6 ">
+        <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-6 " >
           <div >
             <DataTable value={stats}  header="Winners Leaderboard" sortField="wins" sortOrder={-1} onRowSelect={onRowSelect} selectionMode="single" 
             className="shadow-md fff-winners-table" 
@@ -106,7 +137,7 @@ export default function App() {
 
 
       {/* Start Team Ownership */}
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2  gap-4">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2  gap-4" id="teamsSection">
          {stats.map((player, index) => (
         <div key={index} className={player.name === currentGlobalPlayer ? 'fff-current-global-player' : ''}>
             <Fieldset legend={player.name} className='shadow-md p-2' >
@@ -173,7 +204,7 @@ export default function App() {
       <br/><br/>
 
       {/* Schedule */}
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-4">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-4" id="scheduleSection">
         {schedule?.map((game, gameIndex) => (
            
            <Card key={gameIndex} className={`shadow-md ${  currentGlobalPlayer === game.homeTeamOwner || currentGlobalPlayer === game.awayTeamOwner ? 'fff-current-global-player' : ''}`}> 
@@ -209,6 +240,11 @@ export default function App() {
       {/* End Schedule */}
 
       <br/><br/>
+
+
+        
+      <Dock model={items} position="bottom" style={{position:'fixed'}}/>
+
 
     </div>
   )
