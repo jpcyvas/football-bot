@@ -344,7 +344,7 @@ async function getStandings(){
 }
 
 async function getGoogleSheetStandings(){
-    var fantasyTeams = await getStandingsData();
+    var fantasyTeams = (await getStandingsData()).standings;
     var fantasyTeamsWinners = JSON.parse(JSON.stringify(fantasyTeams));;
     var fantasyTeamsLosers = JSON.parse(JSON.stringify(fantasyTeamsWinners));
     
