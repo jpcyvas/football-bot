@@ -91,9 +91,62 @@
 }
 
 .fff-body-tag .p-dock .p-dock-container {
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    padding: 0.5rem 0.5rem;
-    border-radius: 0.5rem;
-    overflow: visible !important;
+        overflow: visible !important;
 }
+
+.fff-body-tag .p-dock .p-dock-container .p-dock-list{
+        background: rgba(0, 0, 0, 0.4);
+        /* border: 1px solid rgba(0, 0, 0, 0.5); */
+        padding: 0.5rem 0.5rem;
+        border-radius: 12px;
+        overflow: visible !important;
+}
+
+.fff-body-tag .p-dock .p-dock-item .p-avatar{
+        background-image: linear-gradient(-180deg, #054778 0%, #086EBA 100%);
+        border-radius: 4px;
+        font-size:1.75rem !important;
+        box-sizing: border-box;
+        color: #FFFFFF;
+        display: flex;
+        justify-content: center;
+        padding: 1rem 1.75rem;
+        text-decoration: none;
+        width: 100%;
+        border: 0;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        box-shadow: var(--shadow-md);  
+        overflow: visible;
+
+        
+}
+
+.fff-body-tag .p-dock .p-dock-item .p-avatar:hover{
+          background-image: linear-gradient(-180deg, #086EBA 0%, #0A88E6 100%);
+}
+
+.fff-body-tag .p-dock .p-dock-item .p-speeddial > .p-button{
+        background-image: linear-gradient(-180deg, #054778 0%, #086EBA 100%);
+        border-radius: 3px;
+        outline: none; 
+        color: #FFFFFF;
+        border: 0;
+        bottom:-2px;
+}
+
+.fff-body-tag .p-dock .p-dock-item .p-speeddial > .p-button:hover{
+          background-image: linear-gradient(-180deg, #086EBA 0%, #0A88E6 100%);
+}
+
+
+.fff-body-tag .p-dock .p-dock-item .p-speeddial .p-button:first-of-type .pi{
+        font-size:1.75rem;
+}
+
+.fff-body-tag .p-dock .p-dock-item .p-speeddial .p-button:focus{
+        box-shadow: 0;
+}
+
