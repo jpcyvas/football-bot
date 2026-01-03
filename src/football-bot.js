@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const footballApiUrlStandings = 'https://site.api.espn.com/apis/v2/sports/football/nfl/standings';
-const footballApiUrlSchedule = 'https://cdn.espn.com/core/nfl/schedule?xhr=1&year={YEAR}&week={WEEK}';
+const footballApiUrlSchedule = 'https://cdn.espn.com/core/nfl/schedule?xhr=1&year=2025&week={WEEK}';
 
 //Get today's date in YYYY-MM-DD format
 function getTodaysDate() {
