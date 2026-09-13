@@ -19,7 +19,7 @@ function getTodaysDateAndTime() {
 //Fetch data from the API
 async function makeAPICall(apiURL) {
     try {
-        const fullRequestUrl = apiURL;; 
+        const fullRequestUrl = apiURL;
         const response = await axios.get(fullRequestUrl);
         return response.data;
     } catch (error) {
@@ -33,9 +33,9 @@ function getFantasyTeams(){
         {
             "name": "Beau",
             "teams": [
-            "Philadelphia Eagles",
-            "Atlanta Falcons",
-            "Jacksonville Jaguars"
+            "Los Angeles Chargers",
+            "Detroit Lions",
+            "Tampa Bay Buccaneers"
             ],
             "displayTeams":[],
             "wins": 0,
@@ -47,8 +47,8 @@ function getFantasyTeams(){
             "name": "Beth",
             "teams": [
             "Minnesota Vikings",
-            "Pittsburgh Steelers",
-            "Houston Texans"
+            "Buffalo Bills",
+            "Kansas City Chiefs"
             ],
             "displayTeams":[],
             "wins": 0,
@@ -59,9 +59,9 @@ function getFantasyTeams(){
         {
             "name": "Brandon",
             "teams": [
-            "Los Angeles Rams",
-            "Tampa Bay Buccaneers",
-            "New England Patriots"
+            "Cleveland Browns",
+            "Washington Commanders",
+            "Chicago Bears"
             ],
             "displayTeams":[],
             "wins": 0,
@@ -72,9 +72,9 @@ function getFantasyTeams(){
         {
             "name": "Jonas",
             "teams": [
-            "New York Jets",
-            "New Orleans Saints",
-            "Indianapolis Colts"
+            "Arizona Cardinals",
+            "New York Giants",
+            "Tennessee Titans"
             ],
             "displayTeams":[],
             "wins": 0,
@@ -85,9 +85,9 @@ function getFantasyTeams(){
         {
             "name": "Lauren",
             "teams": [
-            "Cleveland Browns",
-            "New York Giants",
-            "Dallas Cowboys"
+            "Miami Dolphins",
+            "Carolina Panthers",
+            "Indianapolis Colts"
             ],
             "displayTeams":[],
             "wins": 0,
@@ -98,9 +98,9 @@ function getFantasyTeams(){
         {
             "name": "Maria",
             "teams": [
-            "Baltimore Ravens",
-            "San Francisco 49ers",
-            "Cincinnati Bengals"
+            "Seattle Seahawks",
+            "Green Bay Packers",
+            "Jacksonville Jaguars"
             ],
             "displayTeams":[],
             "wins": 0,
@@ -111,9 +111,9 @@ function getFantasyTeams(){
         {
             "name": "Mitch",
             "teams": [
-            "Buffalo Bills",
-            "Green Bay Packers",
-            "Washington Commanders"
+            "Los Angeles Rams",
+            "Baltimore Ravens",
+            "Pittsburgh Steelers"
             ],
             "displayTeams":[],
             "wins": 0,
@@ -125,8 +125,8 @@ function getFantasyTeams(){
             "name": "Stephen",
             "teams": [
             "Las Vegas Raiders",
-            "Carolina Panthers",
-            "Tennessee Titans"
+            "New York Jets",
+            "New Orleans Saints"
             ],
             "displayTeams":[],
             "wins": 0,
@@ -137,9 +137,9 @@ function getFantasyTeams(){
         {
             "name": "Taylor",
             "teams": [
-            "Detroit Lions",
-            "Miami Dolphins",
-            "Los Angeles Chargers"
+            "Cincinnati Bengals",
+            "San Francisco 49ers",
+            "Philadelphia Eagles"
             ],
             "displayTeams":[],
             "wins": 0,
@@ -151,8 +151,8 @@ function getFantasyTeams(){
             "name": "Theresa",
             "teams": [
             "Denver Broncos",
-            "Chicago Bears",
-            "Kansas City Chiefs"
+            "Dallas Cowboys",
+            "Atlanta Falcons"
             ],
             "displayTeams":[],
             "wins": 0,
@@ -391,7 +391,7 @@ async function GetStandingsStringifyed(){
 
 //get the current NFL week based on today's date
 function getCurrentNFLWeek(today = new Date()) {
-  const seasonStart = new Date('2025-09-04'); // NFL 2025 season start date
+  const seasonStart = new Date('2026-09-04'); // NFL 2026 season start date
   const msPerWeek = 7 * 24 * 60 * 60 * 1000;
 
   const diff = today - seasonStart;

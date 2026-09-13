@@ -107,7 +107,7 @@ export default function App() {
         <div className='flex justify-center ' id="leaderBoardSection">
           <div className="flex items-center gap-2 p-3 shadow-md bg-white">
             <Image src={logo} alt="Image" width="125" />
-            <h1 className='text-2xl p-4 text-shadow-md'>Family Fantasy Football 2025-2026</h1>
+            <h1 className='text-2xl p-4 text-shadow-md'>Family Fantasy Football 2026-2027</h1>
           </div>
         </div>
 
