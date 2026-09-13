@@ -391,7 +391,7 @@ async function GetStandingsStringifyed(){
 
 //get the current NFL week based on today's date
 function getCurrentNFLWeek(today = new Date()) {
-  const seasonStart = new Date('2026-09-01'); // NFL 2026 season start date
+  const seasonStart = new Date('2026-09-06'); // NFL 2026 season start date
   const msPerWeek = 7 * 24 * 60 * 60 * 1000;
 
   const diff = today - seasonStart;
